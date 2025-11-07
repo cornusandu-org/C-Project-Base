@@ -5,8 +5,8 @@
 #include <csignal>
 #include <atomic>
 
-static std::atomic<uint8_t> errcode{EXIT_SUCCESS};
-std::atomic<bool> signal_gotten{false};
+static volatile std::atomic<uint8_t> errcode{EXIT_SUCCESS};  // should be async-safe, but UB is purely theoretical
+static std::atomic<bool> signal_gotten{false};
 
 inline void cf_exit() {
 	if (errcode == EXIT_DEBUG0 || errcode == EXIT_DEBUG1 || errcode == EXIT_DEBUG2 || errcode == EXIT_DEBUG3) {
@@ -61,6 +61,7 @@ inline void cf_exit(int errorcode) {
 	cf_exit();
 }
 
+// This is a POSIX-based (Linux) function
 // You may need to patch this for windows by adding #include <windows.h>
 inline void signal_handler(int signal) {
 	if (signal_gotten == true) return;
@@ -97,6 +98,7 @@ inline void signal_handler(int signal) {
 	}
 }
 
+/* Setuup signal handling with signal_handler() */
 static void setup() {
 	std::signal(SIGSEGV, signal_handler);
 	std::signal(SIGBUS, signal_handler);
