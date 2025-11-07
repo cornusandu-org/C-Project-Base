@@ -98,7 +98,8 @@ inline void signal_handler(int signal) {
 	}
 }
 
-/* Setuup signal handling with signal_handler() */
+/* Setup signal handling with signal_handler()                         */
+/* Also intended for Linux, you may need to patch this for <windows.h> */
 static void setup() {
 	std::signal(SIGSEGV, signal_handler);
 	std::signal(SIGBUS, signal_handler);
