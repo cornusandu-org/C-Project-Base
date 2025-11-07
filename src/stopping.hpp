@@ -5,7 +5,7 @@
 #include <csignal>
 #include <atomic>
 
-static uint8_t errcode = EXIT_SUCCESS;
+static std::atomic<uint8_t> errcode{EXIT_SUCCESS};
 std::atomic<bool> signal_gotten{false};
 
 inline void cf_exit() {
