@@ -61,6 +61,7 @@ inline void cf_exit(int errorcode) {
 	cf_exit();
 }
 
+// You may need to patch this for windows by adding #include <windows.h>
 inline void signal_handler(int signal) {
 	if (signal_gotten.load() == true) return;
 	signal_gotten.store(true);
