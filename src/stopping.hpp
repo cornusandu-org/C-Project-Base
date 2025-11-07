@@ -13,7 +13,7 @@ inline void cf_exit() {
 		if (!DEBUG_BUILD) {return;}
 
 		std::cerr << "[DEXIT] DEBUG EXIT TRIGGERED (ID=" << errcode - EXIT_DEBUG0 << ")" << std::endl;
-		exit(errcode);
+		goto _finish;
 	}
 	switch (errcode) {
 		case EXIT_SUCCESS: {
