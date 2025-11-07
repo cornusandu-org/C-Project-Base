@@ -5,7 +5,8 @@
 #include <csignal>
 #include <atomic>
 
-static std::atomic<uint8_t> errcode{EXIT_SUCCESS};  // should be async-safe, but UB is purely theoretical
+static std::atomic<uint8_t> errcode{EXIT_SUCCESS};  // Should be async-safe (is not), but UB is purely theoretical
+													// (it's atomic, so no race conditions) and this should work in practice
 static std::atomic<bool> signal_gotten{false};
 
 inline void cf_exit() {
